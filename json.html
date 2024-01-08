@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management App</title>
+</head>
+<body>
+
+    <h1>Student Management</h1>
+
+    <div id="output"></div>
+
+    <h2>Add Student</h2>
+    <form id="addForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+        <label for="age">Age:</label>
+        <input type="number" id="age" required>
+        <button type="button" onclick="addStudent()">Add Student</button>
+    </form>
+
+    <h2>Edit Student</h2>
+    <form id="editForm">
+        <label for="editIndex">Enter Index to Edit:</label>
+        <input type="number" id="editIndex" required>
+        <label for="editName">New Name:</label>
+        <input type="text" id="editName" required>
+        <label for="editAge">New Age:</label>
+        <input type="number" id="editAge" required>
+        <button type="button" onclick="editStudent()">Edit Student</button>
+    </form>
+
+    <h2>Delete Student</h2>
+    <form id="deleteForm">
+        <label for="deleteIndex">Enter Index to Delete:</label>
+        <input type="number" id="deleteIndex" required>
+        <button type="button" onclick="deleteStudent()">Delete Student</button>
+    </form>
+
+    <script>
+        // Sample student data in JSON format
+        let students = [
+            { name: "John Doe", age: 20 },
+            { name: "Jane Doe", age: 22 },
+            { name: "Bob Smith", age: 21 }
+        ];
+
+        // Function to display students
+        function displayStudents() {
+            let output = document.getElementById('output');
+            output.innerHTML = '<h2>Students</h2>';
+
+            if (students.length === 0) {
+                output.innerHTML += '<p>No students available.</p>';
+            } else {
+                students.forEach((student, index) => {
+                    output.innerHTML += `<p>${index}: ${student.name}, ${student.age} years old</p>`;
+                });
+            }
+        }
+
+        // Function to add a new student
+        function addStudent() {
+            let name = document.getElementById('name').value;
+            let age = document.getElementById('age').value;
+
+            students.push({ name, age });
+            displayStudents();
+        }
+
+        // Function to edit an existing student
+        function editStudent() {
+            let index = document.getElementById('editIndex').value;
+            let name = document.getElementById('editName').value;
+            let age = document.getElementById('editAge').value;
+
+            if (index >= 0 && index < students.length) {
+                students[index] = { name, age };
+                displayStudents();
+            } else {
+                alert('Invalid index. Please enter a valid index.');
+            }
+        }
+
+        // Function to delete a student
+        function deleteStudent() {
+            let index = document.getElementById('deleteIndex').value;
+
+            if (index >= 0 && index < students.length) {
+                students.splice(index, 1);
+                displayStudents();
+            } else {
+                alert('Invalid index. Please enter a valid index.');
+            }
+        }
+
+        // Initial display of students
+        displayStudents();
+    </script>
+
+</body>
+</html>
